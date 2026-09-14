@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>sitegrab — download a copy of any website</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="masthead">
+      <div class="masthead-mark">§</div>
+      <div class="masthead-text">
+        <h1>sitegrab</h1>
+        <p class="tagline">Pull down a working copy of any public website — pages, styles, images — as a zip you can open offline.</p>
+      </div>
+    </header>
+
+    <main class="ticket">
+      <form id="job-form">
+        <label for="url-input">Site to archive</label>
+        <div class="input-row">
+          <span class="input-prefix">→</span>
+          <input id="url-input" name="url" type="text" placeholder="example.com or https://example.com/docs" autocomplete="off" required />
+        </div>
+        <button id="submit-btn" type="submit">Archive it</button>
+      </form>
+
+      <div id="status" class="status" hidden>
+        <div class="status-line">
+          <span id="status-label">queued</span>
+          <span id="status-dots" class="dots"><span></span><span></span><span></span></span>
+        </div>
+        <div id="status-detail" class="status-detail"></div>
+        <a id="download-link" class="download-link" hidden href="#">Download site.zip</a>
+      </div>
+    </main>
+
+    <footer class="notes">
+      <p>Runs a mirroring crawl of the site you give it and packages everything into a zip. Large or slow sites can take a few minutes. Only fetches public pages — nothing behind a login.</p>
+      <p>No accounts, no tracking, no ads. Be a good citizen: only archive sites you have the right to copy.</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
