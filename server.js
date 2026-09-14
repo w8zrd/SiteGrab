@@ -182,40 +182,4 @@ app.post('/api/jobs', async (req, res) => {
       const { code, stderr } = await runWget(parsed.toString(), dir);
       const gotFiles = await dirHasFiles(dir);
       if (!gotFiles) {
-        const hint = (stderr || '').trim().split('\n').slice(-3).join(' ').slice(0, 300);
-        jobs.set(jobId, {
-          ...jobs.get(jobId),
-          status: 'error',
-          error: 'wget did not download any files. The site may block bots, the URL may be unreachable, or something failed on the server.' + (hint ? ` Details: ${hint}` : ''),
-        });
-        scheduleCleanup(jobId);
-        return;
-      }
-      const zipPath = path.join(TMP_ROOT, `${jobId}.zip`);
-      await zipDirectory(dir, zipPath);
-      const job = jobs.get(jobId);
-      jobs.set(jobId, { ...job, status: 'done', zipPath, wgetExitCode: code });
-      scheduleCleanup(jobId);
-    } catch (e) {
-      jobs.set(jobId, { ...jobs.get(jobId), status: 'error', error: e.message || 'Download failed.' });
-      scheduleCleanup(jobId);
-    }
-  })();
-});
-
-app.get('/api/jobs/:id', (req, res) => {
-  const job = jobs.get(req.params.id);
-  if (!job) return res.status(404).json({ error: 'Job not found (it may have expired).' });
-  res.json({ status: job.status, error: job.error || null });
-});
-
-app.get('/api/jobs/:id/download', (req, res) => {
-  const job = jobs.get(req.params.id);
-  if (!job || job.status !== 'done') return res.status(404).json({ error: 'Not ready.' });
-  res.download(job.zipPath, 'site.zip');
-});
-
-app.listen(PORT, () => {
-  fs.mkdirSync(TMP_ROOT, { recursive: true });
-  console.log(`sitegrab listening on port ${PORT}`);
-});
+        const hint = (stderr || '').trim().split('\n').slice(-3).join(' ').slice(
