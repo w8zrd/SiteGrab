@@ -1,0 +1,16 @@
+{
+  "name": "sitegrab",
+  "version": "1.0.0",
+  "description": "Public tool to download a copy of a website as a zip, using wget under the hood.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "archiver": "^7.0.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
